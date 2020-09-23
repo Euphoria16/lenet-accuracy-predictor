@@ -110,7 +110,7 @@ ytrain_gpu = ltrain.to(device)
 xtest_gpu = xtest.to(device)
 ltest_gpu = ytest.to(device)
 
-weight_bit_width_list=[2,3]#,4,5,6,8,16]#7*16
+weight_bit_width_list=[2,3,4,5,6,8,16]#7*16
 vector_list=[]
 acc_list=[]
 
@@ -122,7 +122,7 @@ for i in range(weight_bit_width, weight_bit_width + 1):
         net_gpu = QuantLeNet(weight_bit_width=weight_bit_width_list[i]).to(device)
         #save the best model on validation set
 
-        train_and_eval(xtrain_gpu, ytrain_gpu, net_gpu, xtest_gpu, ytest, total_epochs=2, weight_bit_num=weight_bit_width)
+        train_and_eval(xtrain_gpu, ytrain_gpu, net_gpu, xtest_gpu, ytest, total_epochs=20, weight_bit_num=weight_bit_width)
         # end = time.time()
         # print(f'It takes {end-start:.6f} seconds.')
 
@@ -143,7 +143,7 @@ for i in range(weight_bit_width, weight_bit_width + 1):
         print('prune accuracy: {:.5f}'.format(prune_acc))
 
 
-        fine_tune_epoch=2
+        fine_tune_epoch=20
         train_and_eval(xtrain_gpu, ytrain_gpu, net_gpu, xtest_gpu, ytest, total_epochs=fine_tune_epoch, weight_bit_num=weight_bit_width)
 
 
